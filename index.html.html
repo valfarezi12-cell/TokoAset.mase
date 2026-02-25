@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TokoAset.Mase — Aset Roblox Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e8000d;
+    --red-dark: #9b0009;
+    --red-bright: #ff1a25;
+    --red-glow: rgba(232, 0, 13, 0.35);
+    --bg: #080608;
+    --bg2: #0f0a0b;
+    --bg3: #160d0e;
+    --card: #110809;
+    --border: rgba(232, 0, 13, 0.18);
+    --text: #f0e8e8;
+    --text-muted: #8a7070;
+    --text-dim: #4a3535;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: normal;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--red);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.12s ease;
+    opacity: 0.6;
+  }
+  .cursor.hover { width: 6px; height: 6px; }
+  .cursor-ring.hover { width: 54px; height: 54px; opacity: 0.3; }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 500;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8, 6, 8, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red);
+    color: white !important;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 12px !important;
+    letter-spacing: 2px !important;
+    transition: background 0.2s, box-shadow 0.2s !important;
+  }
+  .nav-cta:hover {
+    background: var(--red-bright) !important;
+    box-shadow: 0 0 20px var(--red-glow) !important;
+    color: white !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 48px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,0,13,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(232,0,13,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 80% 60%, rgba(232,0,13,0.04) 0%, transparent 50%);
+  }
+
+  /* GRID LINES */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,0,13,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,0,13,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 70%);
+  }
+
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 12vw, 160px);
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-title .line2 {
+    color: var(--red);
+    text-shadow: 0 0 60px rgba(232,0,13,0.5);
+    display: block;
+  }
+
+  .hero-title .line3 {
+    font-size: clamp(32px, 5vw, 64px);
+    color: var(--text-muted);
+    display: block;
+    letter-spacing: 8px;
+  }
+
+  .hero-desc {
+    max-width: 480px;
+    margin: 0 auto 48px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: white;
+    padding: 14px 36px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    transition: all 0.2s;
+    box-shadow: 0 0 0 rgba(232,0,13,0);
+  }
+  .btn-primary:hover {
+    background: var(--red-bright);
+    box-shadow: 0 8px 30px var(--red-glow), 0 0 0 1px var(--red);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 36px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover {
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow: inset 0 0 20px rgba(232,0,13,0.05);
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 48px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+  .marquee-track {
+    display: flex;
+    gap: 48px;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .marquee-item span { color: var(--red); font-size: 10px; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* PRODUCTS SECTION */
+  .section {
+    padding: 100px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+  }
+
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .section-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .section-link:hover { color: var(--red); border-color: var(--red); }
+
+  /* FILTER TABS */
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .filter-tab {
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .filter-tab:hover, .filter-tab.active {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+    box-shadow: 0 4px 16px var(--red-glow);
+  }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    group: true;
+  }
+  .product-card:hover {
+    border-color: var(--red);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,0,13,0.2), 0 0 30px rgba(232,0,13,0.08);
+  }
+
+  .product-thumb {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-thumb-inner {
+    font-size: 64px;
+    filter: drop-shadow(0 4px 12px rgba(232,0,13,0.3));
+    transition: transform 0.3s;
+  }
+  .product-card:hover .product-thumb-inner { transform: scale(1.1); }
+
+  .product-thumb-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(232,0,13,0.08) 0%, transparent 70%);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: var(--red);
+    color: white;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  .product-body {
+    padding: 20px;
+  }
+
+  .product-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+
+  .product-name {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .product-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .product-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .product-price small {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: block;
+    letter-spacing: 1px;
+  }
+
+  .btn-buy {
+    background: transparent;
+    border: 1px solid var(--red);
+    color: var(--red);
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.2s;
+    font-family: 'Syne', sans-serif;
+  }
+  .btn-buy:hover {
+    background: var(--red);
+    color: white;
+    box-shadow: 0 4px 16px var(--red-glow);
+  }
+
+  /* FEATURED BANNER */
+  .featured-banner {
+    margin: 0 0 100px;
+    background: linear-gradient(135deg, var(--bg3) 0%, var(--card) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 64px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    max-width: 1400px;
+    margin: 0 auto 100px;
+    padding: 64px 80px;
+  }
+
+  .featured-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%; right: -10%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,0,13,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .featured-banner::after {
+    content: 'FEATURED';
+    position: absolute;
+    top: 28px; right: 28px;
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    letter-spacing: 3px;
+    padding: 5px 14px;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+
+  .featured-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .featured-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 5vw, 80px);
+    line-height: 0.95;
+    margin-bottom: 20px;
+  }
+
+  .featured-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 400px;
+  }
+
+  .featured-price-block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .featured-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--red);
+    line-height: 1;
+    text-shadow: 0 0 30px rgba(232,0,13,0.4);
+  }
+
+  .featured-price-old {
+    font-size: 18px;
+    color: var(--text-dim);
+    text-decoration: line-through;
+  }
+
+  .featured-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 140px;
+    filter: drop-shadow(0 0 40px rgba(232,0,13,0.4));
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+
+  /* WHY US */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .why-card {
+    padding: 32px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  .why-card:hover {
+    border-color: var(--red);
+    box-shadow: 0 0 30px rgba(232,0,13,0.06);
+  }
+
+  .why-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .why-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .why-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* TESTIMONIALS */
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .testi-card {
+    padding: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .testi-quote {
+    font-size: 48px;
+    color: var(--red);
+    line-height: 0.5;
+    margin-bottom: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    opacity: 0.4;
+  }
+
+  .testi-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testi-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .testi-name {
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  .testi-role {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .testi-stars {
+    color: var(--red);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  /* CONTACT / CTA */
+  .cta-section {
+    text-align: center;
+    padding: 100px 48px;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(232,0,13,0.08) 0%, transparent 70%);
+  }
+
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(56px, 8vw, 120px);
+    line-height: 0.9;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .cta-title .highlight {
+    color: var(--red);
+    text-shadow: 0 0 60px rgba(232,0,13,0.5);
+  }
+
+  .cta-desc {
+    font-size: 15px;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  /* CONTACT FORM */
+  .contact-form {
+    max-width: 520px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+  .form-input:focus { border-color: var(--red); }
+  .form-input::placeholder { color: var(--text-dim); }
+
+  .form-select {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+    appearance: none;
+    cursor: none;
+  }
+  .form-select:focus { border-color: var(--red); }
+  .form-select option { background: var(--bg); }
+
+  .form-textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    outline: none;
+    resize: vertical;
+    min-height: 100px;
+    transition: border-color 0.2s;
+    margin-bottom: 16px;
+  }
+  .form-textarea:focus { border-color: var(--red); }
+  .form-textarea::placeholder { color: var(--text-dim); }
+
+  .btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.2s;
+  }
+  .btn-submit:hover {
+    background: var(--red-bright);
+    box-shadow: 0 8px 30px var(--red-glow);
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 48px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 16px;
+    max-width: 280px;
+  }
+
+  .footer-col-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 16px;
+  }
+
+  .social-btn {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .social-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow: 0 0 12px var(--red-glow);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    background: var(--card);
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast-icon { font-size: 20px; }
+  .toast-text { font-size: 13px; font-weight: 600; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--red-dark); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">TOKOASET<span>.</span>MASE</a>
+  <ul class="nav-links">
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#featured">Featured</a></li>
+    <li><a href="#kenapa">Kenapa Kami</a></li>
+    <li><a href="#testimoni">Testimoni</a></li>
+    <li><a href="#order" class="nav-cta">Order Sekarang</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div style="position:relative; z-index:2;">
+    <div class="hero-eyebrow">🎮 #1 Toko Aset Roblox Indonesia</div>
+    <h1 class="hero-title">
+      ASET ROBLOX
+      <span class="line2">PREMIUM</span>
+      <span class="line3">TOKOASET.MASE</span>
+    </h1>
+    <p class="hero-desc">Admin panel, avatar changer, GUI sistem, script profesional — semua aset berkualitas tinggi untuk game Roblox kamu. Harga terjangkau, kualitas premium.</p>
+    <div class="hero-btns">
+      <a href="#produk" class="btn-primary">Lihat Produk</a>
+      <a href="#order" class="btn-outline">Hubungi Kami</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" data-count="150">0</div>
+      <div class="stat-label">Aset Tersedia</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-count="500">0</div>
+      <div class="stat-label">Pembeli Puas</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-count="99">0</div>
+      <div class="stat-label">Rating %</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-count="24">0</div>
+      <div class="stat-label">Jam Support</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">ADMIN PANEL <span>✦</span></span>
+    <span class="marquee-item">AVATAR CHANGER <span>✦</span></span>
+    <span class="marquee-item">GUI SYSTEM <span>✦</span></span>
+    <span class="marquee-item">ANTI CHEAT <span>✦</span></span>
+    <span class="marquee-item">INVENTORY SYSTEM <span>✦</span></span>
+    <span class="marquee-item">COMBAT SYSTEM <span>✦</span></span>
+    <span class="marquee-item">SHOP SYSTEM <span>✦</span></span>
+    <span class="marquee-item">DATA STORE <span>✦</span></span>
+    <span class="marquee-item">ADMIN PANEL <span>✦</span></span>
+    <span class="marquee-item">AVATAR CHANGER <span>✦</span></span>
+    <span class="marquee-item">GUI SYSTEM <span>✦</span></span>
+    <span class="marquee-item">ANTI CHEAT <span>✦</span></span>
+    <span class="marquee-item">INVENTORY SYSTEM <span>✦</span></span>
+    <span class="marquee-item">COMBAT SYSTEM <span>✦</span></span>
+    <span class="marquee-item">SHOP SYSTEM <span>✦</span></span>
+    <span class="marquee-item">DATA STORE <span>✦</span></span>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section" id="produk">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">// Koleksi Aset</div>
+      <h2 class="section-title">PRODUK UNGGULAN</h2>
+    </div>
+    <a href="#" class="section-link">Lihat Semua →</a>
+  </div>
+
+  <div class="filter-tabs reveal">
+    <button class="filter-tab active" onclick="filterProducts('semua', this)">Semua</button>
+    <button class="filter-tab" onclick="filterProducts('gui', this)">GUI System</button>
+    <button class="filter-tab" onclick="filterProducts('admin', this)">Admin Tools</button>
+    <button class="filter-tab" onclick="filterProducts('gameplay', this)">Gameplay</button>
+    <button class="filter-tab" onclick="filterProducts('avatar', this)">Avatar</button>
+  </div>
+
+  <div class="product-grid" id="productGrid">
+    <!-- Products loaded via JS -->
+  </div>
+</section>
+
+<!-- FEATURED -->
+<div style="padding: 0 48px;" id="featured">
+  <div class="featured-banner reveal">
+    <div>
+      <div class="featured-label">// Produk Terlaris</div>
+      <h2 class="featured-title">ADMIN PANEL<br>PRO MAX</h2>
+      <p class="featured-desc">Panel admin paling lengkap yang pernah ada — kick, ban, fly, teleport, inventory, anti-cheat, dan 30+ fitur lainnya dalam satu paket yang elegan.</p>
+      <div class="featured-price-block">
+        <div class="featured-price">75K</div>
+        <div class="featured-price-old">Rp 150.000</div>
+      </div>
+      <a href="#order" class="btn-primary">Beli Sekarang</a>
+    </div>
+    <div class="featured-visual">⚙️</div>
+  </div>
+</div>
+
+<!-- WHY US -->
+<section class="section" id="kenapa">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">// Keunggulan Kami</div>
+      <h2 class="section-title">KENAPA PILIH KAMI?</h2>
+    </div>
+  </div>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-icon">⚡</span>
+      <h3 class="why-title">Pengiriman Cepat</h3>
+      <p class="why-desc">Aset dikirim langsung setelah pembayaran dikonfirmasi. Tidak perlu menunggu lama, langsung bisa dipakai.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.1s">
+      <span class="why-icon">🛡️</span>
+      <h3 class="why-title">Kode Bersih & Aman</h3>
+      <p class="why-desc">Semua script ditulis dengan standar tinggi, bebas malware, anti-exploit, dan sudah diuji di berbagai kondisi.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.2s">
+      <span class="why-icon">🔧</span>
+      <h3 class="why-title">Support Gratis</h3>
+      <p class="why-desc">Ada masalah saat instalasi? Tim kami siap membantu 24 jam via Discord. Garansi script berjalan dengan baik.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.3s">
+      <span class="why-icon">🔄</span>
+      <h3 class="why-title">Update Seumur Hidup</h3>
+      <p class="why-desc">Beli sekali, dapat update selamanya. Kami terus memperbarui aset mengikuti update Roblox terbaru.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimoni">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-eyebrow">// Kata Pembeli</div>
+      <h2 class="section-title">TESTIMONI</h2>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Admin panel-nya keren banget, fiturnya lengkap dan desainnya pro. Support juga responsif banget waktu aku butuh bantuan instalasi.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">😎</div>
+        <div>
+          <div class="testi-name">xDarkPlayz</div>
+          <div class="testi-role">Roblox Developer</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.1s">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Avatar changer-nya mantap! Preview 3D-nya keren, dan bundle loader bisa load outfit langsung. Worth banget harganya.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">🎮</div>
+        <div>
+          <div class="testi-name">RobloxKingID</div>
+          <div class="testi-role">Game Creator</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:0.2s">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Script-nya clean banget, gak ada bug sama sekali. Udah pakai buat game aku dan playernya suka banget sama fitur-fiturnya!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">🚀</div>
+        <div>
+          <div class="testi-name">DevMasterRBX</div>
+          <div class="testi-role">Senior Developer</div>
+          <div class="testi-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / ORDER -->
+<section class="cta-section" id="order">
+  <div style="position:relative; z-index:2;">
+    <h2 class="cta-title">ORDER<br><span class="highlight">SEKARANG</span></h2>
+    <p class="cta-desc">Isi form di bawah dan tim kami akan segera menghubungi kamu via Discord atau WhatsApp.</p>
+    <form class="contact-form" onsubmit="handleOrder(event)">
+      <div class="form-row">
+        <input type="text" class="form-input" placeholder="Nama kamu" required style="margin-bottom:0;">
+        <input type="text" class="form-input" placeholder="Username Roblox" required style="margin-bottom:0;">
+      </div>
+      <input type="text" class="form-input" placeholder="Discord / WhatsApp" required>
+      <select class="form-select">
+        <option value="" disabled selected>Pilih produk yang diinginkan</option>
+        <option>Admin Panel Pro Max — Rp 75.000</option>
+        <option>Avatar Changer — Rp 35.000</option>
+        <option>GUI System Bundle — Rp 50.000</option>
+        <option>Combat System — Rp 65.000</option>
+        <option>Inventory System — Rp 45.000</option>
+        <option>Anti Cheat Pro — Rp 55.000</option>
+        <option>Custom Request — Harga Negosiasi</option>
+      </select>
+      <textarea class="form-textarea" placeholder="Ceritakan kebutuhan kamu, atau ada request custom?"></textarea>
+      <button type="submit" class="btn-submit">Kirim Order 🚀</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-logo">TOKOASET<span style="color:var(--red)">.</span>MASE</div>
+      <p>Toko aset Roblox terpercaya di Indonesia. Menyediakan script dan GUI berkualitas tinggi untuk developer Roblox.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Produk</div>
+      <ul class="footer-links">
+        <li><a href="#">Admin Panel</a></li>
+        <li><a href="#">Avatar Changer</a></li>
+        <li><a href="#">GUI System</a></li>
+        <li><a href="#">Combat System</a></li>
+        <li><a href="#">Inventory System</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Info</div>
+      <ul class="footer-links">
+        <li><a href="#">Cara Order</a></li>
+        <li><a href="#">Cara Pembayaran</a></li>
+        <li><a href="#">Garansi</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontak</div>
+      <ul class="footer-links">
+        <li><a href="#">Discord Server</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Twitter / X</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 TokoAset.Mase — All rights reserved.</div>
+    <div class="footer-socials">
+      <a href="#" class="social-btn">💬</a>
+      <a href="#" class="social-btn">📱</a>
+      <a href="#" class="social-btn">📸</a>
+      <a href="#" class="social-btn">🐦</a>
+    </div>
+  </div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✅</span>
+  <span class="toast-text">Order berhasil dikirim! Kami akan segera menghubungi kamu.</span>
+</div>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button, .product-card, .why-card, .filter-tab').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+});
+
+// PRODUCTS DATA
+const products = [
+  { id:1, name:"Admin Panel Pro", category:"admin", price:"75.000", icon:"⚙️", badge:"TERLARIS", desc:"Panel admin lengkap dengan 30+ fitur. Kick, ban, fly, teleport, dan masih banyak lagi." },
+  { id:2, name:"Avatar Changer", category:"avatar", price:"35.000", icon:"👤", badge:"BARU", desc:"Ganti outfit, aksesoris, dan load bundle Roblox dengan preview 3D real-time." },
+  { id:3, name:"GUI System Bundle", category:"gui", price:"50.000", icon:"🖥️", badge:null, desc:"Komponen GUI lengkap — inventory, shop, HUD, notifikasi, dan dialog system." },
+  { id:4, name:"Combat System", category:"gameplay", price:"65.000", icon:"⚔️", badge:"HOT", desc:"Sistem pertarungan profesional dengan combo, hitbox presisi, dan efek visual." },
+  { id:5, name:"Inventory System", category:"gameplay", price:"45.000", icon:"🎒", badge:null, desc:"Sistem inventory drag-and-drop lengkap dengan penyimpanan DataStore." },
+  { id:6, name:"Anti Cheat Pro", category:"admin", price:"55.000", icon:"🛡️", badge:null, desc:"Sistem anti-exploit canggih untuk melindungi game kamu dari cheater." },
+  { id:7, name:"Shop System", category:"gui", price:"40.000", icon:"🛒", badge:null, desc:"Sistem toko in-game dengan currency, transaksi, dan tampilan yang menarik." },
+  { id:8, name:"DataStore Manager", category:"gameplay", price:"30.000", icon:"💾", badge:null, desc:"Kelola data player dengan mudah, auto-save, dan backup otomatis." },
+];
+
+let activeFilter = 'semua';
+
+function filterProducts(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  const filtered = activeFilter === 'semua' ? products : products.filter(p => p.category === activeFilter);
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card reveal visible">
+      <div class="product-thumb">
+        <div class="product-thumb-bg"></div>
+        <div class="product-thumb-inner">${p.icon}</div>
+        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-category">${p.category}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.desc}</div>
+        <div class="product-footer">
+          <div class="product-price">Rp ${p.price}<small>/ sekali bayar</small></div>
+          <button class="btn-buy" onclick="addToOrder('${p.name}', 'Rp ${p.price}')">Beli</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Re-attach cursor events
+  document.querySelectorAll('.product-card, .btn-buy').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+}
+
+function addToOrder(name, price) {
+  const select = document.querySelector('.form-select');
+  // Try to match existing option
+  for (let opt of select.options) {
+    if (opt.text.includes(name.split(' ')[0])) {
+      select.value = opt.value;
+      break;
+    }
+  }
+  document.getElementById('order').scrollIntoView({ behavior: 'smooth' });
+  showToast(`${name} dipilih! Silakan lengkapi form order.`, '🛒');
+}
+
+renderProducts();
+
+// COUNT UP ANIMATION
+function countUp(el, target, suffix) {
+  let current = 0;
+  const step = target / 60;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(timer); }
+    el.textContent = Math.floor(current) + (suffix || '');
+  }, 16);
+}
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// STATS COUNTER
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll('[data-count]').forEach(el => {
+        const target = parseInt(el.dataset.count);
+        const suffix = el.closest('.stat').querySelector('.stat-label').textContent.includes('%') ? '+' : '+';
+        countUp(el, target, '+');
+      });
+      statsObserver.disconnect();
+    }
+  });
+}, { threshold: 0.5 });
+
+const heroStats = document.querySelector('.hero-stats');
+if (heroStats) statsObserver.observe(heroStats);
+
+// ORDER FORM
+function handleOrder(e) {
+  e.preventDefault();
+  showToast('Order berhasil dikirim! Kami akan segera menghubungi kamu.', '✅');
+  e.target.reset();
+}
+
+function showToast(msg, icon) {
+  const toast = document.getElementById('toast');
+  toast.querySelector('.toast-text').textContent = msg;
+  toast.querySelector('.toast-icon').textContent = icon;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+</script>
+</body>
+</html>
